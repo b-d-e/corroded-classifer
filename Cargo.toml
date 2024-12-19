@@ -1,0 +1,13 @@
+[package]
+name = "corroded_classifier"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ndarray = "0.15"
+rand = "0.8"
+rand_distr = "0.4"
+mnist = "0.5"
+indicatif = "0.17"
+wandb = { git = "https://github.com/NousResearch/wandb-rs.git" }
+tokio = { version = "1.0", features = ["full"] }

@@ -1,0 +1,5 @@
+/target
+.gz
+data/
+!src/data
+cargo.lock
