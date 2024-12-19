@@ -11,3 +11,4 @@ mnist = "0.5"
 indicatif = "0.17"
 wandb = { git = "https://github.com/NousResearch/wandb-rs.git" }
 tokio = { version = "1.0", features = ["full"] }
+textplots = "0.8"

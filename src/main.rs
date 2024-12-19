@@ -6,6 +6,7 @@ use corroded_classifier::{
     network::activation::{ReLU, Sigmoid},
     data::mnist::MnistData,
 };
+use textplots::{Chart, Plot, Shape};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Training parameters
@@ -24,6 +25,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     network.add_layer(Layer::new(784, hidden_size, Box::new(ReLU)));
     network.add_layer(Layer::new(hidden_size, 10, Box::new(Sigmoid)));
 
+
+    // vectors to track metrics for graphs
+    let mut losses = Vec::new();
+    let mut accuracies = Vec::new();
+    let mut epochs_completed = Vec::new();
 
     println!("Starting training...");
 
@@ -72,12 +78,36 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             format!("Epoch avg loss: {:.4} | Train Accuracy: {:.2}% | Val Accuracy: {:.2}%", epoch_loss, epoch_train_accuracy, epoch_val_accuracy)
         );
 
+        losses.push(epoch_loss);
+        accuracies.push(epoch_val_accuracy);
+        epochs_completed.push(epoch as f32);
+
         // Early stopping check
         if epoch_val_accuracy > 98.0 {
             println!("Reached target val accuracy of 98%! Stopping training.");
             break;
         }
+
+        println!();
     }
+
+    println!("\nLoss over time:");
+    Chart::new(200, 40, 0.0, epochs as f32)
+        .lineplot(&Shape::Lines(&epochs_completed
+            .iter()
+            .zip(losses.iter())
+            .map(|(x, y)| (*x, *y))
+            .collect::<Vec<_>>()))
+        .display();
+
+    println!("\nVal Accuracy over time:");
+    Chart::new(200, 40, 0.0, epochs as f32)
+        .lineplot(&Shape::Lines(&epochs_completed
+            .iter()
+            .zip(accuracies.iter())
+            .map(|(x, y)| (*x, *y))
+            .collect::<Vec<_>>()))
+        .display();
 
     Ok(())
 }
