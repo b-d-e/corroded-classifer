@@ -23,3 +23,5 @@ Epoch 5/5
 [00:00:06] ========================================     390/390     Epoch avg loss: 0.0149 | Train Accuracy: 98.44% | Val Accuracy: 97.24%
 ```
 and log some ascii graphs at the end.
+
+CIFAR10 _can_ be used, but currently we are treating colour very naively (flattening) to use as MLP input, so performance is poor. Will explore implementing convlayers as a follow up.
