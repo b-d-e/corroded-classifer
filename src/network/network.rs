@@ -44,8 +44,8 @@ impl Network {
         // Backward pass
         let mut current_error = output_error;
 
-        // We need to iterate through layers in reverse
-        // Also need access to the activations for each layer
+        // iterate through layers in reverse
+        // need access to the activations for each layer
         for (layer_idx, layer) in self.layers.iter_mut().enumerate().rev() {
             let input_activation = &activations[layer_idx];
             let output_activation = &activations[layer_idx + 1];

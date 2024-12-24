@@ -12,18 +12,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Training parameters
     let batch_size = 32;
     let epochs = 5;
-    let hidden_size = 128;
+    let hidden_size = 256;
     let learning_rate = 0.1;
 
     // Load MNIST or CIFAR data
-    let dataset = MnistData::new()?;
-    // let dataset = Cifar10Data::new()?;
+    // let dataset = MnistData::new()?;
+    let dataset = Cifar10Data::new()?;
 
     // Create network
     let mut network = Network::new(learning_rate);
 
     // Add layers
     network.add_layer(Layer::new(dataset.get_input_size(), hidden_size, Box::new(ReLU)));
+    network.add_layer(Layer::new(hidden_size, hidden_size, Box::new(ReLU)));
     network.add_layer(Layer::new(hidden_size, dataset.get_num_classes(), Box::new(Sigmoid)));
 
     // vectors to track metrics for graphs
